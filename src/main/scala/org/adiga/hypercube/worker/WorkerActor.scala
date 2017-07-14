@@ -1,9 +1,8 @@
 package org.adiga.hypercube.worker
 
-import akka.actor.{ActorSystem, _}
+import akka.actor._
 import akka.cluster.ClusterEvent.{CurrentClusterState, MemberUp}
 import akka.cluster.{Cluster, Member, MemberStatus}
-import com.typesafe.config.ConfigFactory
 import org.adiga.hypercube.util.C
 import org.adiga.hypercube.util.Message.{CloseAndDie, WorkerRegistration}
 
@@ -11,6 +10,7 @@ import org.adiga.hypercube.util.Message.{CloseAndDie, WorkerRegistration}
  * Worker actor which does the labour
  */
 class WorkerActor extends Actor {
+
   val cluster = Cluster(context.system)
   var treeLoaded = false
 
@@ -59,30 +59,6 @@ class WorkerActor extends Actor {
     context.system.stop(context.self)
     context.system.terminate()
     System.exit(0)
-  }
-}
-
-object WorkerActor {
-  val usage = """
-    Usage: java -cp distributed-hash-lookup.jar <port>
-  """
-
-  def main(args: Array[String]) {
-    if (args.length == 0) {
-      println(usage)
-      System.exit(1)
-    }
-    /*Get the port from arguments*/
-    val port = if (args.isEmpty) "0" else args(0)
-    /*Load the config*/
-    val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")
-      .withFallback(ConfigFactory.parseString(C.Worker.CLUSTER_ROLE))
-      .withFallback(ConfigFactory.load())
-
-    /*Initialize the actor system*/
-    val workerSystem = ActorSystem(C.ACTOR_SYSTEM, config)
-    val workerActor = workerSystem.actorOf(Props[WorkerActor], name = C.Worker.ROLE)
-    println("Worker is ready at " + workerActor.toString())
   }
 }
 

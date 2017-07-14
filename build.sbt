@@ -13,8 +13,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-cluster" % "2.4.17"
 )
 
-mainClass in Compile := Some("org.adiga,hypercube.master.MasterActor")
-//mainClass in Compile := Some("org.adiga,hypercube.worker.WorkerActor")
+mainClass in Compile := Some("org.adiga,hypercube.master.BaseMaster")
+//mainClass in Compile := Some("org.adiga,hypercube.worker.BaseWorker")
 
 assemblyJarName in assembly := "hypercube-master.jar"
 //assemblyJarName in assembly := "hypercube-worker.jar"

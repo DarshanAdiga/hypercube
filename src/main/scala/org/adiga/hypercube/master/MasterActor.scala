@@ -1,9 +1,6 @@
 package org.adiga.hypercube.master
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props, Terminated}
-import com.typesafe.config.ConfigFactory
-import org.adiga.hypercube.util.C
-import org.adiga.hypercube.util.C.Master
+import akka.actor.{Actor, ActorRef, Terminated}
 import org.adiga.hypercube.util.Message.{CloseAndDie, WorkerRegistration}
 
 /**
@@ -47,21 +44,5 @@ class MasterActor() extends Actor {
     context.system.stop(context.self)
     context.system.terminate()
     System.exit(1)
-  }
-}
-
-object MasterActor {
-
-  def main(args: Array[String]) {
-    /*Load the config*/
-    /*Override the port by first argument, if provided*/
-    val port = if (args.isEmpty) "0" else args(0)
-    val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")
-      .withFallback(ConfigFactory.parseString(Master.CLUSTER_ROLE))
-      .withFallback(ConfigFactory.load())
-
-    /*Initialize the actor system*/
-    val masterSystem = ActorSystem(C.ACTOR_SYSTEM, config)
-    val masterActor = masterSystem.actorOf(Props[MasterActor], name = C.Master.ROLE)
   }
 }
