@@ -54,7 +54,10 @@ object MasterActor {
 
   def main(args: Array[String]) {
     /*Load the config*/
-    val config = ConfigFactory.parseString(Master.CLUSTER_ROLE)
+    /*Override the port by first argument, if provided*/
+    val port = if (args.isEmpty) "0" else args(0)
+    val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")
+      .withFallback(ConfigFactory.parseString(Master.CLUSTER_ROLE))
       .withFallback(ConfigFactory.load())
 
     /*Initialize the actor system*/

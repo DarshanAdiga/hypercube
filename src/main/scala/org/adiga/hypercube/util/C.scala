@@ -5,7 +5,7 @@ package org.adiga.hypercube.util
   */
 object C {
 
-  val ACTOR_SYSTEM = "AhoCorasick"
+  val ACTOR_SYSTEM = "Hypercube"
   object Master {
     val ROLE = "master"
     val CLUSTER_ROLE = "akka.cluster.roles = [" + ROLE + "])"

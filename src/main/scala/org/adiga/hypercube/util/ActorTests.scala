@@ -4,12 +4,12 @@ import java.io.File
 
 import akka.actor.ActorSystem
 import akka.pattern.ask
-import scala.concurrent.duration._
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import Message.{CloseAndDie, LoadDictionary}
+import org.adiga.hypercube.util.Message.CloseAndDie
 
 import scala.concurrent.Await
+import scala.concurrent.duration._
 
 /**
   * Created by adiga on 2/4/17.
