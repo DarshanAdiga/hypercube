@@ -1,6 +1,10 @@
 Hypercube
 =======================
-This is framework to build simple distributed applications
+This is framework to build simple master-worker styled distributed applications.
+
+WARNING:
+========
+THIS PROJECT IS ONLY EXPERIMENTAL
 
 Run the master
 ---------------
